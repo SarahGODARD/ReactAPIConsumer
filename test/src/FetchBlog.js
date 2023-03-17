@@ -34,18 +34,23 @@ const FetchBlog = () => {
 }
 
 const handleClicked = (id) => {
-    setClicked(id)
+    if (clicked === id) {
+        setClicked(null)
+    } else {
+        setClicked(id)
+    }
     const currentComment = comments.filter((e) => e.postId === id)
     setComment(currentComment)
 }
 
 return (<>
-            {post && post.map(e => <li key={e.id}> <div class="card-body" onClick={()=> {handleClicked(e.id)}}>
-                    <h5 class="card-title">{e.title}</h5>
-                    <p class="card-text">{e.body}</p>
-                    <a href="#" class="card-link">Card link</a>
-                    {clicked === e.id && <div class="card-text">{comment && comment.map(e => <span key={e.id}>{e.body}</span>)}</div>}
-                    <h5 class="card-title">{e.user_id}</h5>
+            {post && post.map(e => <li key={e.id}><div class="card">
+                        <div class="card-body" onClick={()=> {handleClicked(e.id)}}>
+                        <h5 class="card-title">{e.title}</h5>
+                        <p class="card-text">{e.body}</p>
+                        {clicked === e.id && <div class="card-subtitle mb-2 text-muted">{comment && comment.map(e => <span key={e.id}>{e.body}</span>)}</div>}
+                        <h6 class="card-subtitle mb-2 text-muted">{e.userId}</h6>
+                    </div>
                 </div>
             </li>)}
         </>
